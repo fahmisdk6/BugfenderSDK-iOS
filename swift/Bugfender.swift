@@ -10,6 +10,8 @@ import Foundation
 
 #if swift(>=3.1)
     extension Bugfender {
+
+        
         public class func print(_ items: Any..., separator: String = " ", terminator: String = "\n", tag: String? = nil, level: BFLogLevel = .default, filename: String = #file, line: Int = #line, funcname: String = #function)
         {
             log(items: items, separator: separator, terminator: terminator, tag: tag, filename: filename, line: line, funcname: funcname)

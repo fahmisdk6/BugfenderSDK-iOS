@@ -10,9 +10,20 @@ pipeline {
       }
     }
 
+    stage('Call other job') {
+      steps {
+        script {
+          def buildJob = build job: 'Bugfender Android SDK sample', wait: true, propagate: true
+          echo buildJob.getResult()
+        }
+      }
+    }
+
     stage('Dependecies') {
       steps {
-        sh '/usr/local/bin/pod install'
+        script {
+          sh '/usr/local/bin/pod install'
+        }
       }
     }
 

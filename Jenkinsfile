@@ -24,7 +24,7 @@ pipeline {
         parallel (
           "Unit Tests": {
             script {
-              def buildJob = build job: 'Android with metrics/master', wait: true, propagate: true
+              def buildJob = build job: 'Android with metrics/master', wait: true, propagate: false
               echo buildJob.getResult()
             }
           },

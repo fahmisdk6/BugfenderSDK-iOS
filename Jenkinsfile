@@ -1,4 +1,5 @@
 #!groovy
+import java.time.LocalDateTime
 
 pipeline {
   agent any
@@ -10,12 +11,45 @@ pipeline {
       }
     }
 
+    stage("Set version") {
+        steps {
+            script {
+              sh 'echo "$BUILD_TIMESTAMP"'
+            }
+        }
+    }
+
     stage('Call other job') {
       steps {
-        script {
-          def buildJob = build job: 'Bugfender Android SDK sample', wait: true, propagate: true
-          echo buildJob.getResult()
-        }
+        parallel (
+          "Unit Tests": {
+            script {
+              def buildJob = build job: 'Android with metrics/master', wait: true, propagate: true
+              echo buildJob.getResult()
+            }
+          },
+          "UI Automation": {
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+          }
+        )
+        
       }
     }
 

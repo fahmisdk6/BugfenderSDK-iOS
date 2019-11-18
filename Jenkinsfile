@@ -1,4 +1,5 @@
 #!groovy
+import java.time.LocalDateTime
 
 pipeline {
   agent any
@@ -10,9 +11,53 @@ pipeline {
       }
     }
 
+    stage("Set version") {
+        steps {
+            script {
+              sh 'echo "$BUILD_TIMESTAMP"'
+            }
+        }
+    }
+
+    stage('Call other job') {
+      steps {
+        parallel (
+          "Unit Tests": {
+            script {
+              def buildJob = build job: 'Android with metrics/master', wait: true, propagate: false
+              echo buildJob.getResult()
+            }
+          },
+          "UI Automation": {
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+            sh 'echo "UI Automation"'
+          }
+        )
+        
+      }
+    }
+
     stage('Dependecies') {
       steps {
-        sh '/usr/local/bin/pod install'
+        script {
+          sh '/usr/local/bin/pod install'
+        }
       }
     }
 
